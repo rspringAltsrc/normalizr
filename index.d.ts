@@ -55,11 +55,18 @@ export interface SchemaObject<T> {
   [key: string]: SchemaValue<T>
 }
 
-export interface SchemaArray<T> extends Array<Schema<T>> {}
+export interface SchemaArray<T> extends Array<Schema<T>> { }
+
+export type NormalizedType<T> = {
+  [P in keyof T]:
+  T[P] extends boolean | string | number | Array<boolean | string | number>
+  ? T[P]
+  : T[P] extends Array<any> ? number[] : number
+};
 
 export type NormalizedSchema<E, R> = { entities: E, result: R };
 
-export function normalize<T = any, E = { [key:string]: { [key:string]: T } | undefined}, R = any>(
+export function normalize<T = any, E = { [key: string]: NormalizedType<T> | undefined }, R = any>(
   data: any,
   schema: Schema<T>
 ): NormalizedSchema<E, R>;
