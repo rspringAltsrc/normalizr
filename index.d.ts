@@ -2,7 +2,7 @@ declare namespace schema {
   export type StrategyFunction<T> = (value: any, parent: any, key: string) => T;
   export type SchemaFunction = (value: any, parent: any, key: string) => string;
   export type MergeFunction = (entityA: any, entityB: any) => any;
-  export type FallbackFunction<T> = (key: string, schema: schema.Entity<T>) => T;
+  export type FallbackFunction<T> = (key: string & number, schema: schema.Entity<T>) => T;
 
   export class Array<T = any> {
     constructor(definition: Schema<T>, schemaAttribute?: string | SchemaFunction)
